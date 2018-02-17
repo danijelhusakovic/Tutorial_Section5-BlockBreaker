@@ -10,6 +10,7 @@ public class LoseCollider : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
+		Brick.breakableCount = 0;
 		levelManager.LoadLevel("Lose");
 	}
 	

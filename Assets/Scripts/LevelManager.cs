@@ -3,6 +3,12 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 
+	void Update (){
+		if(Input.GetKeyDown(KeyCode.RightArrow)){
+			LoadNextLevel();
+		}
+	}
+
 	public void LoadLevel(string name){
 		Debug.Log("LoadLevel method entered for " + name);
 		Application.LoadLevel(name);
