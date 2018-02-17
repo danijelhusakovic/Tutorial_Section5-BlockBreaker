@@ -8,8 +8,18 @@ public class LevelManager : MonoBehaviour {
 		Application.LoadLevel(name);
 	}
 	
+	public void LoadNextLevel(){
+		Application.LoadLevel(Application.loadedLevel + 1);
+	}
+	
 	public void QuitRequest(){
 		Debug.Log("Quit requested!");
 		Application.Quit();
+	}
+	
+	public void BrickDestroyed(){
+		if (Brick.breakableCount <= 0) {
+			LoadNextLevel();
+		}
 	}
 }
