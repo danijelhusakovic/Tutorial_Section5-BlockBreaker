@@ -6,6 +6,7 @@ public class Brick : MonoBehaviour {
 	
 	public AudioClip crack;
 	public Sprite[] hitSprites;
+	public GameObject smoke;
 	
 	private int timesHit;
 	private LevelManager levelManager;
@@ -26,7 +27,7 @@ public class Brick : MonoBehaviour {
 		print(breakableCount);
 	}
 	
-	void OnCollisionEnter2D (Collision2D collision){
+	void OnCollisionExit2D (Collision2D collision){
 		AudioSource.PlayClipAtPoint(crack, transform.position);
 		if (isBreakable){
 			HandleHits();
@@ -38,6 +39,7 @@ public class Brick : MonoBehaviour {
 		int maxHits = hitSprites.Length + 1;
 		if(timesHit >= maxHits){
 			breakableCount--;
+			PuffSmoke();
 			// messaging the level manager each time a brick is destroyed
 			// levelmanager asks itself "was that the last one?"
 			// if so, loads next level :)
@@ -50,10 +52,17 @@ public class Brick : MonoBehaviour {
 		}
 	}
 	
+	void PuffSmoke(){
+		GameObject smokePuff = Instantiate (smoke, transform.position, Quaternion.identity) as GameObject;
+		smokePuff.particleSystem.startColor = gameObject.GetComponent<SpriteRenderer>().color;
+	}
+	
 	void LoadSprites(){
 		int spriteIndex = timesHit - 1;
-		if(hitSprites[spriteIndex]){
+		if(hitSprites[spriteIndex] != null){ // this could be just if(hitSprites[spriteIndex]), but this is clearer
 			this.GetComponent<SpriteRenderer>().sprite = hitSprites[spriteIndex];
+		} else {
+			Debug.LogError ("Brick sprite missing");
 		}
 	}
 	
