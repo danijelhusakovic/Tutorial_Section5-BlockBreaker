@@ -19,10 +19,10 @@ public class Ball : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	if((Input.GetKeyDown(KeyCode.KeypadPlus))||(Input.GetKeyDown(KeyCode.Plus))){
-		gameObject.rigidbody2D.velocity += speedModificationVector;
-		Debug.Log (gameObject.rigidbody2D.velocity);
+		gameObject.GetComponent<Rigidbody2D>().velocity += speedModificationVector;
+		Debug.Log (gameObject.GetComponent<Rigidbody2D>().velocity);
 	} else if ((Input.GetKeyDown(KeyCode.KeypadMinus))||(Input.GetKeyDown(KeyCode.Minus))){
-		gameObject.rigidbody2D.velocity -= speedModificationVector;	
+		gameObject.GetComponent<Rigidbody2D>().velocity -= speedModificationVector;	
 		}
 		
 		
@@ -33,7 +33,7 @@ public class Ball : MonoBehaviour {
 			
 			// Wait for mouse click to launch the ball
 			if(Input.GetMouseButtonDown(0)){
-				this.rigidbody2D.velocity = new Vector2 (2f, 10f);
+				this.GetComponent<Rigidbody2D>().velocity = new Vector2 (2f, 10f);
 				isResting = false;
 			}
 		}
@@ -45,8 +45,8 @@ public class Ball : MonoBehaviour {
 		Vector2 tweak = new Vector2 (Random.Range (0f, 0.2f), Random.Range (0f, 0.2f));
 		
 		if(!isResting){
-			audio.Play();
-			rigidbody2D.velocity += tweak;
+			GetComponent<AudioSource>().Play();
+			GetComponent<Rigidbody2D>().velocity += tweak;
 		}
 	}
 	
