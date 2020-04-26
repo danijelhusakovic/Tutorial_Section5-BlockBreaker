@@ -1,9 +1,22 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class LevelManager : MonoBehaviour {
+public class LevelManager : MonoBehaviour 
+{
+	private int _numScenes;
+	private int _currentIndex;
 
-	void Update (){
+	private void Start()
+	{
+		_numScenes = SceneManager.sceneCountInBuildSettings;
+		_currentIndex = SceneManager.GetActiveScene().buildIndex;
+	}
+
+	void Update ()
+	{
+		if (_currentIndex >= _numScenes - 3) { return; }
+
 		if(Input.GetKeyDown(KeyCode.RightArrow)){
 			LoadNextLevel();
 		}
@@ -14,7 +27,9 @@ public class LevelManager : MonoBehaviour {
 		Application.LoadLevel(name);
 	}
 	
-	public void LoadNextLevel(){
+	public void LoadNextLevel()
+	{
+        if (_currentIndex >= _numScenes - 1) { return; }
 		Application.LoadLevel(Application.loadedLevel + 1);
 	}
 	
